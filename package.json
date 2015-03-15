@@ -1,0 +1,14 @@
+{
+  "name": "ble-unlock",
+  "version": "0.1.0",
+  "author": "Fredrik Källström",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "applescript": "^1.0.0",
+    "winston": "^0.9.0",
+    "noble":"^0.3.10"
+  }
+}
