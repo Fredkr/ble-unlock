@@ -1,35 +1,25 @@
-var noble = require('noble'),
+var bleacon = require('bleacon'),
 	screenSaver = require('./screenLocker'),
 	config = require('./config'),
-	logger = require('./logger');
+	logger = require('./logger'),
+	util = require('util');
 
 exports.scan = function() {
-	noble.on('scanStart', function() {
-		logger.info("Scan started.");
+	bleacon.startScanning();
+	logger.info('scan started');
+	var lockedState = false;
+
+	bleacon.on('discover', function(bleacon) {
+		//console.log(util.inspect(bleacon, {showHidden: false, depth: null}));
+		if(!lockedState && bleacon.uuid === '389ae052210b4cc8a5d2d6e9236e50bd'){
+			logger.info('lock');
+			lockedState = true;
+			screenSaver.lockScreen();
+		}
+		if(lockedState && bleacon.uuid === 'a82e33d9b9ba4dc6b1f1fd2060922787'){
+			logger.info('unlock');
+			lockedState = false;
+			screenSaver.unlockScreen();
+		}
 	});
-
-	noble.on('scanStop', function() {
-	    logger.info("Scan stopped.");
-	});
-
-	noble.on('discover', function(peripheral) {
-
-	  	if(peripheral.advertisement.localName !== config.bleDeviceName) return;
-
-		peripheral.on('connect', function(){
-	  		logger.info('connected');
-
-		});
-		peripheral.on('disconnect', function(){
-	  		logger.info('disconnected from peripheral: ' + peripheral.uuid + ' name: '+peripheral.advertisement.localName);
-		});
-	
-	  	peripheral.connect(function(error) {
-	  		console.log('connected to peripheral: ' + peripheral.uuid + ' name: '+peripheral.advertisement.localName);
-	  	});
-	});
-
-	var allowDuplicates = false; 
-	noble.startScanning([], allowDuplicates);
-
 }
