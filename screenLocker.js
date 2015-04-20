@@ -12,18 +12,18 @@ var screenLockScript =
 		    if exists fileName then\n\
 		    else\n\
 		    	tell application "Terminal"\n\
-					do script "' + terminalCreateLockFile + '"\n\
+					do script "' + terminalCreateLockFile + ';killall Terminal"\n\
 				end tell\n\
 				delay 0.5\n\
 		    end if\n\
 		    tell application "Terminal"\n\
-					do script "' + lockscreenFilePath + '"\n\
+					do script "' + lockscreenFilePath + ';killall Terminal"\n\
 			end tell\n\
 		end tell';
 
 var screenUnlockScript =
 		'tell application "Terminal"\n\
-			do shell script "caffeinate -u -t 1"\n\
+			do shell script "caffeinate -u -t 1 killall Terminal"\n\
 			end tell\n\
 			delay 0.5\n\
 		tell application "System Events" to tell process "loginwindow"\n\
