@@ -2,14 +2,13 @@
 using CoreBluetooth;
 using CoreLocation;
 using CoreFoundation;
+using System;
 
 namespace bleunlock
 {
 	public class BeaconTransmitter
 	{
-		private static readonly string unlockUUID = "a82e33d9-b9ba-4dc6-b1f1-fd2060922787";
 		private static readonly string unlockId = "Unlock";
-		private static readonly string lockUUID = "389ae052-210b-4cc8-a5d2-d6e9236e50bd";
 		private static readonly string lockId = "lock";
 		private CLBeaconRegion unlockRegion;
 		private CLBeaconRegion lockRegion;
@@ -17,18 +16,18 @@ namespace bleunlock
 
 		public BeaconTransmitter()
 		{
-			unlockRegion = new CLBeaconRegion (new NSUuid (unlockUUID), unlockId);
-			lockRegion = new CLBeaconRegion (new NSUuid (lockUUID), lockId);
 			peripheralManager = new CBPeripheralManager (new BTPeripheralDelegate (), DispatchQueue.DefaultGlobalQueue);
 		}
 
 		public void TransmittUnlock()
 		{
+			unlockRegion = new CLBeaconRegion (new NSUuid (Settings.UnlockUUID), unlockId);
 			StartTransmitting (unlockRegion);
 		}
 
 		public void TransmittLock()
 		{
+			lockRegion = new CLBeaconRegion (new NSUuid (Settings.LockUUID), lockId);
 			StartTransmitting (lockRegion);
 		}
 

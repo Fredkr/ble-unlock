@@ -104,11 +104,35 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="ble-unlockViewController.cs" />
-    <Compile Include="ble-unlockViewController.designer.cs">
-      <DependentUpon>ble-unlockViewController.cs</DependentUpon>
-    </Compile>
     <Compile Include="BeaconTransmitter.cs" />
+    <Compile Include="SettingsViewController.cs" />
+    <Compile Include="SettingsViewController.designer.cs">
+      <DependentUpon>SettingsViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="BleViewController.cs" />
+    <Compile Include="BleViewController.designer.cs">
+      <DependentUpon>BleViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsUnlockViewController.cs" />
+    <Compile Include="SettingsUnlockViewController.designer.cs">
+      <DependentUpon>SettingsUnlockViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsLockViewController.cs" />
+    <Compile Include="SettingsLockViewController.designer.cs">
+      <DependentUpon>SettingsLockViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Resources\Icons\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icons\lock_button_highlited_256.png" />
+    <BundleResource Include="Resources\Icons\lock_button_normal_256png" />
+    <BundleResource Include="Resources\Icons\unlock_button_normal_256.png" />
+    <BundleResource Include="Resources\Icons\unlock_button_highlited_256.png" />
+    <BundleResource Include="Resources\Icons\lock32.png" />
+    <BundleResource Include="Resources\Icons\unlock32.png" />
+  </ItemGroup>
 </Project>

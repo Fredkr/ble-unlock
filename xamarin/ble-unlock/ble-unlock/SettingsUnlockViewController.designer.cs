@@ -11,26 +11,26 @@ using UIKit;
 
 namespace bleunlock
 {
-	[Register ("ble_unlockViewController")]
-	partial class ble_unlockViewController
+	[Register ("SettingsUnlockViewController")]
+	partial class SettingsUnlockViewController
 	{
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
-		UIButton LockButton { get; set; }
+		UIButton SettingsUnlockUUIDButton { get; set; }
 
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
-		UIButton UnlockButton { get; set; }
+		UITextField SettingsUnlockUUIDText { get; set; }
 
 		void ReleaseDesignerOutlets ()
 		{
-			if (LockButton != null) {
-				LockButton.Dispose ();
-				LockButton = null;
+			if (SettingsUnlockUUIDButton != null) {
+				SettingsUnlockUUIDButton.Dispose ();
+				SettingsUnlockUUIDButton = null;
 			}
-			if (UnlockButton != null) {
-				UnlockButton.Dispose ();
-				UnlockButton = null;
+			if (SettingsUnlockUUIDText != null) {
+				SettingsUnlockUUIDText.Dispose ();
+				SettingsUnlockUUIDText = null;
 			}
 		}
 	}
