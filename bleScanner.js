@@ -7,19 +7,24 @@ var bleacon = require('bleacon'),
 exports.scan = function() {
 	bleacon.startScanning();
 	logger.info('scan started');
-	var lockedState = false;
+	var self = this;
+	self.timeOut = false;
 
 	bleacon.on('discover', function(bleacon) {
-		//console.log(util.inspect(bleacon, {showHidden: false, depth: null}));
-		if(!lockedState && bleacon.uuid === '389ae052210b4cc8a5d2d6e9236e50bd'){
-			logger.info('lock');
-			lockedState = true;
-			screenSaver.lockScreen();
-		}
-		if(lockedState && bleacon.uuid === 'a82e33d9b9ba4dc6b1f1fd2060922787'){
-			logger.info('unlock');
-			lockedState = false;
-			screenSaver.unlockScreen();
+		console.log(util.inspect(bleacon, {showHidden: false, depth: null}));
+
+		if(!self.timeOut){
+			self.timeOut = true;
+			screenSaver.screenIsActive(function(screenIsActive) {
+				if(screenIsActive && bleacon.uuid === '0d65410849314945b4120615bdb895b5'){
+					screenSaver.lockScreen();
+				}
+				else if(!screenIsActive && bleacon.uuid === 'bdbed62785c14e33a755ff3e956262e4'){
+					screenSaver.unlockScreen();			
+				}
+
+				setTimeout(function () {self.timeOut = false;}, 500);
+			});
 		}
 	});
 }

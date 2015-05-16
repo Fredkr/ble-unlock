@@ -54,3 +54,4 @@ UpgradeLog.*
 
 # DotCover
 *.dotCover
+help.txt
