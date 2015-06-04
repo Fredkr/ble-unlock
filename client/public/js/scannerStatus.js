@@ -2,7 +2,7 @@ var ScannerStatus = React.createClass({
     getInitialState: function() {
         var self = this;
         var isScanning = false;
-        $.get("http://localhost:3001/scannerActive/")
+        $.get("http://localhost:3001/get/scannerActive/")
             .done(function(data) {
                 var scanning = JSON.parse(data).active === true;
                 self.setState({
@@ -28,7 +28,7 @@ var ScannerStatus = React.createClass({
     render: function() {
         var classString = this.state.isScanning ? 'scanner-info scanner-info-enabled' : 'scanner-info scanner-info-disabled';
         return ( 
-            <div className="status-container">
+            <div className="status-container center">
                 <h1 className={classString}> Status </h1>
                 <p> 
                     <button className="button-xlarge pure-button scanner-button" onClick={this.toggle}> {this.state.isScanning ? 'Stop' : 'Start'} </button>

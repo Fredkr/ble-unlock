@@ -47,6 +47,7 @@ UpgradeLog.*
 *.userprefs
 *.usertasks
 *.user
+*.db
 
 # ReSharper
 *_Resharper.*

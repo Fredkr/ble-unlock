@@ -1,5 +1,5 @@
 var applescript = require( 'applescript' ),
-	config = require( './config' ),
+	settings = require( './settings' ),
 	logger = require('./logger'),
 	util = require('util');
 
@@ -25,14 +25,16 @@ var screenLockScript =
 			end tell\n\
 		end tell';
 
-var screenUnlockScript =
-		'tell application "Terminal"\n\
-			do shell script "caffeinate -u -t 0.1 killall Terminal"\n\
-		end tell\n\
-		tell application "System Events"\n\
-            keystroke "'+ config.password +'"\n\
-            keystroke return\n\
-		end tell';
+var screenUnlockScript = function(password){
+	return 'tell application "Terminal"\n\
+				do shell script "caffeinate -u -t 0.1 killall Terminal"\n\
+			end tell\n\
+			tell application "System Events"\n\
+	            keystroke "'+ password +'"\n\
+	            keystroke return\n\
+			end tell';	
+	}
+
 
 self.screenIsActive = function(callback){
 	applescript.execString(screenAwakeStateScript, function(err, rtn) {
@@ -55,10 +57,14 @@ self.lockScreen = function() {
 }
 
 self.unlockScreen = function() {
-	applescript.execString(screenUnlockScript, function(err, rtn) {
-		if(err)
-			logger.error(err);
+	settings.getByType("password", function(password){
+		applescript.execString(screenUnlockScript(password.data), function(err, rtn) {
+			if(err){
+				logger.error(err);
+			}	
+		});
 	});
+	
 }
 
 module.exports = {
