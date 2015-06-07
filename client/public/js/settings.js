@@ -18,11 +18,12 @@ var Settings = React.createClass({
         return ( 
             <div className="settings-container">
                 <div className="settings-content">
-                    <h1> Settings </h1>
+                    <div className="settings-header">
+                        <i className="fa fa-cog settings-icon"></i>
+                    </div>
                     <h2>Lock</h2>
                     <TableWrapper action="lock" source="http://localhost:3001/get/validDevices/?action=lock" />
-                    <button className="button-xlarge pure-button" > Save</button>
-                    <h2>Lock</h2>
+                    <h2>unlock</h2>
                     <TableWrapper action="unlock" source="http://localhost:3001/get/validDevices/?action=unlock" />
 
                 </div>
@@ -48,12 +49,15 @@ var TableWrapper = React.createClass({
     },
     render: function() {
         return (
+            <div>
                 <table className="pure-table pure-table-horizontal">
+              
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Device</th>
-                            <th>GUID</th>
+                            <th className="col-id">#</th>
+                            <th className="col-name">Device</th>
+                            <th className="col-uuid">GUID</th>
+                            <th className="col-buttons"></th>
                         </tr>
                     </thead>
 
@@ -64,6 +68,7 @@ var TableWrapper = React.createClass({
                         <NewDeviceItemWrapper action={this.props.action} source="http://localhost:3001/post/addDevice/" />
                     </tbody>
                 </table>
+            </div>
                 );
     }
 });
@@ -97,18 +102,24 @@ var NewDeviceItemWrapper = React.createClass({
     },
     render: function() {
         return <tr>
-            <td><button className="button-xsmall pure-button" onClick={this.saveDevice}></button></td>
-            <td><input type="text" value={this.state.name} onChange={this.handleChange.bind(this, 'name')} /></td>
-            <td><input type="text" value={this.state.uuid} onChange={this.handleChange.bind(this, 'uuid')} /></td>
+            <td className="col-id">?</td>
+            <td className="col-name"><input type="text" value={this.state.name} onChange={this.handleChange.bind(this, 'name')} /></td>
+            <td className="col-uuid"><input type="text" value={this.state.uuid} onChange={this.handleChange.bind(this, 'uuid')} /></td>
+            <td className="col-save"><button className="button-xsmall pure-button" onClick={this.saveDevice}><i className="fa fa-floppy-o"></i></button></td>
         </tr>;
     }
 });
+
 var DeviceItemWrapper = React.createClass({
   render: function() {
     return <tr>
-        <td>1</td>
-        <td>{this.props.data.name}</td>
-        <td>{this.props.data.uuid}</td>
+        <td className="col-id">1</td>
+        <td className="col-name">{this.props.data.name}</td>
+        <td className="col-uuid">{this.props.data.uuid}</td>
+        <td className="col-buttons">
+            <button className="button-xsmall pure-button"><i className="fa fa-pencil"></i></button>
+            <button className="button-xsmall pure-button"><i className="fa fa-trash-o"></i></button>
+        </td>
     </tr>;
   }
 });

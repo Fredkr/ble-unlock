@@ -3,59 +3,147 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background-color: #3C3C3C; }
+  background-color: #DCDCDC; }
+
+h1 {
+  text-align: center; }
 
 .center {
-  text-align: center;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); }
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  text-align: center; }
 
 .status-container {
-  width: 100%;
-  height: 60%;
-  z-index: 1;
+  width: 60%;
+  height: 50%;
   overflow: hidden;
-  position: fixed !important; }
+  padding: 20px; }
+  .status-container button {
+    font-size: 125%;
+    background-color: #EE4400;
+    width: 20%;
+    color: white; }
+  .status-container .scanner-info {
+    opacity: 0.7;
+    border: 1px solid white;
+    border-radius: 50px;
+    margin-bottom: 20px;
+    width: 100%;
+    height: 30%;
+    display: table; }
+    .status-container .scanner-info p {
+      display: table-cell;
+      vertical-align: middle;
+      font-size: 40px;
+      font-weight: bold;
+      color: white; }
+    .status-container .scanner-info.enabled {
+      background-color: #32CD32;
+      box-shadow: 0 0 0 rgba(50, 205, 50, 0.6);
+      animation: pulse 3s infinite;
+      -webkit-animation: pulse 3s infinite; }
 
-.scanner-info {
-  width: 50%;
-  font-size: 40px;
-  opacity: 0.7;
-  font-weight: bold;
-  color: white;
-  border: 1px solid white;
-  padding: 30px;
-  border-radius: 50px;
-  margin: 0 auto; }
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(50, 205, 50, 0.6); }
+  70% {
+    -webkit-box-shadow: 0 0 0 20px rgba(50, 205, 50, 0); }
+  100% {
+    -webkit-box-shadow: 0 0 0 0 rgba(50, 205, 50, 0); } }
 
-.scanner-info-enabled {
-  background-color: #31EF78; }
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(50, 205, 50, 0.6);
+    box-shadow: 0 0 0 0 rgba(50, 205, 50, 0.6); }
+  70% {
+    -moz-box-shadow: 0 0 0 20px rgba(50, 205, 50, 0);
+    box-shadow: 0 0 0 20px rgba(50, 205, 50, 0); }
+  100% {
+    -moz-box-shadow: 0 0 0 0 rgba(50, 205, 50, 0);
+    box-shadow: 0 0 0 0 rgba(50, 205, 50, 0); } }
+      .status-container .scanner-info.enabled p {
+        animation: text-pulse 3s infinite;
+        -webkit-animation: text-pulse 3s infinite; }
 
-.scanner-info-disabled {
-  background-color: #FF6666; }
+@-webkit-keyframes text-pulse {
+  0% {
+    -webkit-transform: scale(1); }
+  50% {
+    -webkit-transform: scale(1.03); }
+  100% {
+    -webkit-transform: scale(1); } }
 
-.scanner-button {
-  font-size: 125%;
-  background-color: #EE4400;
-  width: 15%;
-  color: white; }
+@keyframes text-pulse {
+  0% {
+    transform: scale(1); }
+  50% {
+    transform: scale(1.03); }
+  100% {
+    transform: scale(1); } }
+    .status-container .scanner-info.disabled {
+      background-color: #A92F41; }
 
 .settings-container {
+  -moz-box-shadow: -5px -5px 5px #C7C6C4;
+  -webkit-box-shadow: -5px -5px 5px #C7C6C4;
+  box-shadow: -5px -5px 5px #C7C6C4;
   position: absolute;
   top: 87%;
   width: 100%;
   z-index: 2;
-  background: #B1B1B1; }
+  background: #D1D0CE; }
 
 .settings-content {
-  margin: 1% auto;
+  margin: auto;
   width: 50%; }
+  .settings-content .settings-header {
+    height: 13vh;
+    position: relative;
+    text-align: center; }
+    .settings-content .settings-header i {
+      font-size: 60px;
+      width: 100%;
+      left: 0;
+      top: 20%;
+      position: absolute; }
   .settings-content table {
-    width: 100%; }
-  .settings-content input {
-    border: 0;
-    border-bottom: 2px dotted;
-    border-color: lightgray;
-    font-style: italic;
-    background-color: #B1B1B1; }
+    width: 100%;
+    table-layout: fixed;
+    white-space: nowrap;
+    border: none; }
+    .settings-content table td {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      position: relative; }
+      .settings-content table td input {
+        width: 90%;
+        position: absolute;
+        background-position: bottom;
+        border: 0;
+        font-style: italic;
+        background-color: #D1D0CE;
+        background-image: linear-gradient(to right, #333 10%, rgba(255, 255, 255, 0) 0%);
+        background-size: 10px 1px;
+        background-repeat: repeat-x; }
+    .settings-content table .col-id {
+      width: 5%;
+      text-align: center; }
+    .settings-content table .col-name {
+      width: 20%; }
+    .settings-content table .col-uuid {
+      width: 55%; }
+    .settings-content table .col-buttons {
+      width: 20%;
+      text-align: center; }
+      .settings-content table .col-buttons button {
+        width: 50%; }
+    .settings-content table .col-save {
+      width: 20%;
+      text-align: center; }
+      .settings-content table .col-save button {
+        width: 100%; }

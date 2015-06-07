@@ -26,13 +26,13 @@ var ScannerStatus = React.createClass({
     },
 
     render: function() {
-        var classString = this.state.isScanning ? 'scanner-info scanner-info-enabled' : 'scanner-info scanner-info-disabled';
+        var classString = this.state.isScanning ? 'scanner-info enabled' : 'scanner-info disabled';
         return ( 
             <div className="status-container center">
-                <h1 className={classString}> Status </h1>
-                <p> 
-                    <button className="button-xlarge pure-button scanner-button" onClick={this.toggle}> {this.state.isScanning ? 'Stop' : 'Start'} </button>
-                </p>
+                <div className={classString}>
+                    <p> {this.state.isScanning ? 'Scanning' : 'Turned off'} </p>
+                </div>
+                <button className="button-xlarge pure-button" onClick={this.toggle}> {this.state.isScanning ? 'Stop' : 'Start'} </button>
             </div>
         );
     }
