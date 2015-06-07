@@ -15,6 +15,11 @@ app.use(express.static('client/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.listen(3001, 'localhost', function() {});
 
+
+
+
+
+
 app.get('/toggleScanner', function(req, res) {
 	bleScan.toggleScanner(function() {
 		res.send('{"active":' + bleScan.isScanning() + '}');
@@ -23,6 +28,13 @@ app.get('/toggleScanner', function(req, res) {
 
 app.get('/get/scannerActive', function(req, res) {
 	res.send('{"active":' + bleScan.isScanning() + '}');
+});
+
+app.get('/get/synchronizeDevice', function(req, res) {
+	bleScan.synchronizeDevice(function(deviceUuid){
+		console.log(deviceUuid);
+		res.send(deviceUuid);
+	});
 });
 
 app.get('/get/validDevices/', function(req, res) {

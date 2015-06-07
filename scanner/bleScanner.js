@@ -28,6 +28,28 @@ self.isScanning = function() {
 	return isScanning;
 }
 
+self.synchronizeDevice = function(callback){
+	var promise = new Promise(function(resolve, reject) {
+		var noResult = setTimeout(function() {
+			bleacon.stopScanning();
+			resolve("test"); 
+		}, 10000);
+
+		bleacon.startScanning();
+		bleacon.on('discover', function(beacon) {
+			if(beacon.proximity === 'immediate'){
+				bleacon.stopScanning();
+				clearTimeout(noResult);
+				resolve(beacon.uuid);
+			}
+		});
+	});
+
+	promise.then(function(data) {
+		return callback(data)
+	});
+}
+
 var initiateScan = function(callback) {
 
 	settings.listByType("device",function(devices){
@@ -68,5 +90,6 @@ var startScanningToggleMode = function(uuids){
 
 module.exports = {
 	toggleScanner: self.toggleScanner,
-	isScanning: self.isScanning
+	isScanning: self.isScanning,
+	synchronizeDevice: self.synchronizeDevice
 };
