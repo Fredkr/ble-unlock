@@ -28,19 +28,15 @@ app.get('/get/scannerActive', function(req, res) {
 app.get('/get/validDevices/', function(req, res) {
 
 	settings.listByType("device",function(devices){
-		var filteredDevices = devices.filter(function(item){
-    		return item.action === req.query.action;  
-		});
-		res.send(filteredDevices);
+		res.send(devices);
 	});
 });
 
 app.post('/post/addDevice', function(req, res){
 	var newDoc = {
 		name: req.body.name,
-		uuid: req.body.uuid,
-		action: req.body.action
-	};
+		uuid: req.body.uuid
+		};
 	settings.create("device", newDoc, function(status){
 		res.send(status);
 	});

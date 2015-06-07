@@ -31,45 +31,36 @@ self.isScanning = function() {
 var initiateScan = function(callback) {
 
 	settings.listByType("device",function(devices){
-		var unlockuuids = devices.filter(function(item){
-    		return item.action === 'unlock';  
-		});
-		unlockuuids =  unlockuuids.map(function(obj){ 
-	       return obj.uuid;
-	    });
-	    var lockuuids = devices.filter(function(item){
-    		return item.action === 'lock';  
-		});
-	    lockuuids =  lockuuids.map(function(obj){ 
+	    var deviceUuids =  devices.map(function(obj){ 
 	       return obj.uuid;
 	    });
 
-		startScanning(unlockuuids, lockuuids);
+		startScanningToggleMode(deviceUuids);
 		callback();
 	});
 }
 
-var startScanning = function(unlockUuids, lockUuids){
+var startScanningToggleMode = function(uuids){
 	var self = this;
 	self.timeOut = false;
 
-	bleacon.startScanning(lockUuids.concat(unlockUuids));
+	bleacon.startScanning(uuids);
 
 	bleacon.on('discover', function(bleacon) {
-		//console.log(util.inspect(bleacon, {showHidden: false, depth: null}));
 
-		if (!self.timeOut) {
+		//console.log(util.inspect(bleacon, {showHidden: false, depth: null}));
+		if (uuids.contains(bleacon.uuid) && !self.timeOut) {
 			self.timeOut = true;
 			screenSaver.screenIsActive(function(screenIsActive) {
-				if (screenIsActive && lockUuids.contains(bleacon.uuid)) {
+				if (screenIsActive) {
 					screenSaver.lockScreen();
-				} else if (!screenIsActive && unlockUuids.contains(bleacon.uuid)) {
+				} else if (!screenIsActive) {
 					screenSaver.unlockScreen();
 				}
 
 				setTimeout(function() {
 					self.timeOut = false;
-				}, 500);
+				}, 1500);
 			});
 		}
 	});

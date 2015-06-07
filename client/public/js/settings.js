@@ -21,11 +21,8 @@ var Settings = React.createClass({
                     <div className="settings-header">
                         <i className="fa fa-cog settings-icon"></i>
                     </div>
-                    <h2>Lock</h2>
-                    <TableWrapper action="lock" source="http://localhost:3001/get/validDevices/?action=lock" />
-                    <h2>unlock</h2>
-                    <TableWrapper action="unlock" source="http://localhost:3001/get/validDevices/?action=unlock" />
-
+                    <h2>Devices</h2>
+                    <TableWrapper source="http://localhost:3001/get/validDevices/" />
                 </div>
             </div>
         );
@@ -65,7 +62,7 @@ var TableWrapper = React.createClass({
                         {this.state.uuids.map(function(result) {
                             return <DeviceItemWrapper key={result.id} data={result}/>;
                         })}
-                        <NewDeviceItemWrapper action={this.props.action} source="http://localhost:3001/post/addDevice/" />
+                        <NewDeviceItemWrapper source="http://localhost:3001/post/addDevice/" />
                     </tbody>
                 </table>
             </div>
@@ -87,8 +84,7 @@ var NewDeviceItemWrapper = React.createClass({
             url: this.props.source,
             data: JSON.stringify({
                     name: this.state.name,
-                    uuid: this.state.uuid,
-                    action: this.props.action
+                    uuid: this.state.uuid
             }),
             success: function(msg){
                 console.log( msg);
