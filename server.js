@@ -15,11 +15,6 @@ app.use(express.static('client/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.listen(3001, 'localhost', function() {});
 
-
-
-
-
-
 app.get('/toggleScanner', function(req, res) {
 	bleScan.toggleScanner(function() {
 		res.send('{"active":' + bleScan.isScanning() + '}');
@@ -30,15 +25,17 @@ app.get('/get/scannerActive', function(req, res) {
 	res.send('{"active":' + bleScan.isScanning() + '}');
 });
 
-app.get('/get/synchronizeDevice', function(req, res) {
-	bleScan.synchronizeDevice(function(deviceUuid){
-		console.log(deviceUuid);
-		res.send(deviceUuid);
+app.get('/get/new-devices', function(req, res) {
+	bleScan.scanForNewDevices(function(result){
+		if(result.status === 'error'){
+			res.status(400).send(result.msg);
+		}else{
+			res.status(200).send(result);
+		}
 	});
 });
 
 app.get('/get/validDevices/', function(req, res) {
-
 	settings.listByType("device",function(devices){
 		res.send(devices);
 	});

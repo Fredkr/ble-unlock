@@ -4,6 +4,10 @@ var bleacon = require('bleacon'),
 	logger = require('./logger'),
 	util = require('util'),
 	isScanning = false,
+	isInSetup = false,
+	lockTimeout = false,
+	synchronizationInterval,
+	lockTimer,
 	self = this;
 
 self.toggleScanner = function(callback) {
@@ -28,25 +32,38 @@ self.isScanning = function() {
 	return isScanning;
 }
 
-self.synchronizeDevice = function(callback){
-	var promise = new Promise(function(resolve, reject) {
-		var noResult = setTimeout(function() {
-			bleacon.stopScanning();
-			resolve("test"); 
-		}, 10000);
+self.scanForNewDevices = function(callback){
+	toggleSetupMode();
 
+	var promise = new Promise(function(resolve, reject) {
+
+		setTimeout(function() {
+			reject("No devices found");
+		}, 15000);
+
+		var uuids = [];
 		bleacon.startScanning();
 		bleacon.on('discover', function(beacon) {
-			if(beacon.proximity === 'immediate'){
-				bleacon.stopScanning();
-				clearTimeout(noResult);
-				resolve(beacon.uuid);
+			if(beacon.proximity === 'immediate' && !uuids.contains(beacon.uuid)){
+				uuids.push(beacon.uuid);
 			}
 		});
+
+		synchronizationInterval = setInterval(function() {
+			if(uuids.length > 0){
+				clearInterval(synchronizationInterval);
+				resolve(uuids); 
+			}
+		}, 4500);
+
 	});
 
 	promise.then(function(data) {
+		toggleSetupMode();
 		return callback(data)
+	}, function(err) {
+	  	toggleSetupMode();
+		return callback({status:"error", msg: err })
 	});
 }
 
@@ -63,33 +80,44 @@ var initiateScan = function(callback) {
 }
 
 var startScanningToggleMode = function(uuids){
-	var self = this;
-	self.timeOut = false;
-
+	lockTimeout = false;
 	bleacon.startScanning(uuids);
 
 	bleacon.on('discover', function(bleacon) {
 
 		//console.log(util.inspect(bleacon, {showHidden: false, depth: null}));
-		if (uuids.contains(bleacon.uuid) && !self.timeOut) {
-			self.timeOut = true;
+		if (uuids.contains(bleacon.uuid) && !lockTimeout && !isInSetup) {
+			lockTimeout = true;
+
 			screenSaver.screenIsActive(function(screenIsActive) {
 				if (screenIsActive) {
 					screenSaver.lockScreen();
 				} else if (!screenIsActive) {
 					screenSaver.unlockScreen();
 				}
-
-				setTimeout(function() {
-					self.timeOut = false;
+				clearTimeout(lockTimer);
+				lockTimer = setTimeout(function() {
+					lockTimeout = false;
 				}, 1500);
 			});
 		}
 	});
 }
 
+var toggleSetupMode = function(){
+	isInSetup = !isInSetup;
+	bleacon.stopScanning();
+
+	if(isInSetup){
+		clearTimeout(lockTimer);
+	}else {
+		isScanning = false;
+		clearTimeout(lockTimer);
+	}
+};
+
 module.exports = {
 	toggleScanner: self.toggleScanner,
 	isScanning: self.isScanning,
-	synchronizeDevice: self.synchronizeDevice
+	scanForNewDevices: self.scanForNewDevices
 };
