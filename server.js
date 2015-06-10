@@ -15,13 +15,13 @@ app.use(express.static('client/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.listen(3001, 'localhost', function() {});
 
-app.get('/toggleScanner', function(req, res) {
+app.get('/toggle-scanner', function(req, res) {
 	bleScan.toggleScanner(function() {
 		res.send('{"active":' + bleScan.isScanning() + '}');
 	});
 });
 
-app.get('/get/scannerActive', function(req, res) {
+app.get('/get/scanner-active', function(req, res) {
 	res.send('{"active":' + bleScan.isScanning() + '}');
 });
 
@@ -35,13 +35,13 @@ app.get('/get/new-devices', function(req, res) {
 	});
 });
 
-app.get('/get/validDevices/', function(req, res) {
+app.get('/get/devices/', function(req, res) {
 	settings.listByType("device",function(devices){
 		res.send(devices);
 	});
 });
 
-app.post('/post/addDevice', function(req, res){
+app.post('/post/device', function(req, res){
 	var newDoc = {
 		name: req.body.name,
 		uuid: req.body.uuid

@@ -2,7 +2,7 @@ var ScannerStatus = React.createClass({
     getInitialState: function() {
         var self = this;
         var isScanning = false;
-        $.get("http://localhost:3001/get/scannerActive/")
+        $.get("http://localhost:3001/get/scanner-active/")
             .done(function(data) {
                 var scanning = JSON.parse(data).active === true;
                 self.setState({
@@ -16,7 +16,7 @@ var ScannerStatus = React.createClass({
     },
     toggle: function(event) {
         var self = this;
-        $.get("http://localhost:3001/toggleScanner/")
+        $.get("http://localhost:3001/toggle-scanner/")
             .done(function(data) {
                 var scanning = JSON.parse(data).active === true;
                 self.setState({
