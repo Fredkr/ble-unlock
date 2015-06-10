@@ -17,11 +17,81 @@ h1 {
   right: 0;
   text-align: center; }
 
+input {
+  width: 90%;
+  background-position: bottom;
+  border: 0;
+  font-style: italic;
+  background-color: #D1D0CE;
+  background-image: linear-gradient(to right, #333 10%, rgba(255, 255, 255, 0) 0%);
+  background-size: 10px 1px;
+  background-repeat: repeat-x; }
+
+.device-synchronizer-container {
+  background: #C7C6C4;
+  opacity: 0.9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  top: 60%;
+  width: 50%;
+  position: absolute;
+  left: 25%;
+  min-height: 20vh;
+  border-radius: 10px;
+  z-index: 3;
+  box-shadow: 10px 10px 44px 5px rgba(0, 0, 0, 0.75); }
+  .device-synchronizer-container h1 {
+    margin-bottom: 10px; }
+  .device-synchronizer-container button {
+    margin: 20px; }
+  .device-synchronizer-container i {
+    color: #32CD32;
+    font-size: 60px; }
+  .device-synchronizer-container .error {
+    color: #A92F41;
+    cursor: pointer; }
+  .device-synchronizer-container .device-list {
+    height: 160px;
+    width: 150px;
+    border: 1px solid gray;
+    border-radius: 4px; }
+  .device-synchronizer-container input {
+    width: 60%;
+    background-color: #C7C6C4;
+    background-size: 15px 2px;
+    font-size: 20px;
+    letter-spacing: 1px;
+    text-align: center; }
+  .device-synchronizer-container table {
+    width: 90%;
+    margin: auto auto 30px;
+    text-align: center; }
+    .device-synchronizer-container table tr:after {
+      content: ' ';
+      display: block;
+      visibility: hidden;
+      clear: both; }
+    .device-synchronizer-container table thead {
+      text-align: center; }
+    .device-synchronizer-container table tbody {
+      height: 80px;
+      overflow-y: auto; }
+      .device-synchronizer-container table tbody .selected {
+        border-radius: 10px;
+        background: #353839;
+        color: white; }
+  .device-synchronizer-container thead, .device-synchronizer-container tbody, .device-synchronizer-container tr, .device-synchronizer-container td, .device-synchronizer-container th {
+    display: block; }
+
 .status-container {
   width: 60%;
   height: 50%;
   overflow: hidden;
-  padding: 20px; }
+  padding: 20px;
+  position: fixed !important; }
   .status-container button {
     font-size: 125%;
     background-color: #EE4400;
@@ -99,7 +169,8 @@ h1 {
 
 .settings-content {
   margin: auto;
-  width: 50%; }
+  width: 50%;
+  margin-bottom: 10%; }
   .settings-content .settings-header {
     height: 13vh;
     position: relative;
@@ -109,7 +180,14 @@ h1 {
       width: 100%;
       left: 0;
       top: 20%;
-      position: absolute; }
+      position: absolute;
+      animation-duration: 7s; }
+  .settings-content .scanner-button {
+    width: 50%;
+    left: 25%;
+    position: relative;
+    margin: 10px 0 10px 0;
+    background-color: #77DD77; }
   .settings-content table {
     width: 100%;
     table-layout: fixed;
@@ -120,16 +198,6 @@ h1 {
       overflow: hidden;
       text-overflow: ellipsis;
       position: relative; }
-      .settings-content table td input {
-        width: 90%;
-        position: absolute;
-        background-position: bottom;
-        border: 0;
-        font-style: italic;
-        background-color: #D1D0CE;
-        background-image: linear-gradient(to right, #333 10%, rgba(255, 255, 255, 0) 0%);
-        background-size: 10px 1px;
-        background-repeat: repeat-x; }
     .settings-content table .col-id {
       width: 5%;
       text-align: center; }

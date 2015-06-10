@@ -22,7 +22,7 @@ var Settings = React.createClass({
                         <i className="fa fa-cog fa-spin settings-icon"></i>
                     </div>
                     <h2>Devices</h2>
-                    <TableWrapper 
+                    <DeviceList 
                         getDeviceSource="http://localhost:3001/get/devices/"
                         syncSource="http://localhost:3001/get/new-devices/"
                         saveDeviceSource="http://localhost:3001/post/device/" />

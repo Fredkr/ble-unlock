@@ -1,4 +1,4 @@
-var TableWrapper = React.createClass({
+var DeviceList = React.createClass({
     getInitialState: function() {
         return {
             uuids: []
@@ -17,7 +17,6 @@ var TableWrapper = React.createClass({
         return (
             <div>      
                 <table className="pure-table pure-table-horizontal">
-              
                     <thead>
                         <tr>
                             <th className="col-id">#</th>
@@ -26,32 +25,36 @@ var TableWrapper = React.createClass({
                             <th className="col-buttons"></th>
                         </tr>
                     </thead>
-
                     <tbody>
-                        {this.state.uuids.map(function(result) {
-                            return <DeviceItemWrapper key={result.id} data={result}/>;
+                        {this.state.uuids.map(function(result, id) {
+
+                            return (<tr>
+                                <td className="col-id">{id + 1}</td>
+                                <td className="col-name">{result.name}</td>
+                                <td className="col-uuid">{result.uuid}</td>
+                                <td className="col-buttons">
+                                    <button className="button-xsmall pure-button"><i className="fa fa-pencil"></i></button>
+                                    <button className="button-xsmall pure-button"><i className="fa fa-trash-o"></i></button>
+                                </td>
+                            </tr>)
                         })}
-                        <NewDeviceItemWrapper saveDeviceSource={this.props.saveDeviceSource} />
+                        <NewDeviceItem saveDeviceSource={this.props.saveDeviceSource} />
                     </tbody>
                 </table>
-                <NewDeviceSynchronizer 
+                <NewDeviceSynchronizerButton 
                     syncSource={this.props.syncSource}
                     saveDeviceSource={this.props.saveDeviceSource} />
-
             </div>
-                );
+        );
     }
 });
 
-var NewDeviceSynchronizer = React.createClass({
-    getInitialState: function() {
-        return {};
-    },
+var NewDeviceSynchronizerButton = React.createClass({
     synchronize: function() {
-        React.render( <LightBox 
+        React.render( <NewDeviceSynchronizer 
             syncSource={this.props.syncSource} 
             saveDeviceSource={this.props.saveDeviceSource} />
-            , document.getElementById('lightbox'));
+            , document.getElementById('devicesynchronizer'));
     },
     render: function() {
 
@@ -61,7 +64,7 @@ var NewDeviceSynchronizer = React.createClass({
     }
 });
 
-var NewDeviceItemWrapper = React.createClass({
+var NewDeviceItem = React.createClass({
     getInitialState: function() {
         return {
             name: '',
@@ -95,17 +98,4 @@ var NewDeviceItemWrapper = React.createClass({
             <td className="col-save"><button className="button-xsmall pure-button" onClick={this.saveDevice}><i className="fa fa-floppy-o"></i></button></td>
         </tr>;
     }
-});
-var DeviceItemWrapper = React.createClass({
-  render: function() {
-    return <tr>
-        <td className="col-id">1</td>
-        <td className="col-name">{this.props.data.name}</td>
-        <td className="col-uuid">{this.props.data.uuid}</td>
-        <td className="col-buttons">
-            <button className="button-xsmall pure-button"><i className="fa fa-pencil"></i></button>
-            <button className="button-xsmall pure-button"><i className="fa fa-trash-o"></i></button>
-        </td>
-    </tr>;
-  }
 });

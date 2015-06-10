@@ -1,6 +1,7 @@
 $color-gray: #D1D0CE;
 $color-gray-light: #DCDCDC;
 $color-gray-dark: #C7C6C4;
+$color-gray-dark-2: #353839;
 $color-white: #FFFFFF;
 $color-orange: #EE4400;
 $color-black: #201F1D;
@@ -24,11 +25,101 @@ h1{
     text-align: center;
 }
 
+input {
+    width: 90%;
+    background-position: bottom;
+    border:0;
+    font-style: italic;
+    background-color: $color-gray;
+    background-image: linear-gradient(to right, #333 10%, rgba(255, 255, 255, 0) 0%);
+    background-size: 10px 1px;
+    background-repeat: repeat-x;
+}
+
+.device-synchronizer-container{
+    background: $color-gray-dark;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    top: 60%;
+    width: 50%;
+    position: absolute;
+    left: 25%;
+    min-height: 20vh;
+    border-radius: 10px;
+    z-index: 3;
+    box-shadow: 10px 10px 44px 5px rgba(0,0,0,0.75);
+
+    h1 {
+        margin-bottom: 10px;
+    }
+    button {
+        margin: 20px;
+    }
+
+    i {
+        color: $color-green;
+        font-size: 60px;
+    }  
+
+    .error {
+        color: $color-red;
+        cursor: pointer;
+    }
+    .device-list {
+        height: 160px;
+        width: 150px;
+        border: 1px solid gray;
+        border-radius: 4px;
+    }
+    
+    input {
+        width: 60%;
+        background-color: $color-gray-dark;
+        background-size: 15px 2px;
+        font-size: 20px;
+        letter-spacing: 1px;
+        text-align: center;
+    }
+    table {
+        width: 90%;
+        margin: auto auto 30px;
+        text-align: center;
+        tr:after {
+            content: ' ';
+            display: block;
+            visibility: hidden;
+            clear: both;
+        }
+
+        thead {
+            text-align: center;
+        }
+        tbody {
+            height: 80px;
+            overflow-y: auto;
+
+            .selected{
+                border-radius: 10px;
+                background: $color-gray-dark-2;
+                color: white;
+            }
+        }
+    }
+
+    thead, tbody, tr, td, th { display: block; }
+    
+}
+
 .status-container {
     width: 60%;
     height: 50%;
     overflow: hidden;
     padding: 20px;
+    position: fixed !important;
 
     button {
         font-size: 125%;
@@ -126,7 +217,7 @@ h1{
 .settings-content {
     margin: auto; 
     width: 50%;
-
+    margin-bottom: 10%;
     @mixin input-field {
         input {
             border:0;
@@ -140,6 +231,7 @@ h1{
             background-repeat: repeat-x;
         }
     } 
+
     .settings-header {
         height: 13vh;
         position: relative;
@@ -151,7 +243,16 @@ h1{
             left: 0;
             top: 20%;
             position: absolute;
+            animation-duration: 7s;
         }
+    }
+    .scanner-button {
+        width: 50%;
+        left: 25%;
+        position: relative;
+        margin: 10px 0 10px 0;
+        background-color: #77DD77;
+        
     }
     table {
         width: 100%;
@@ -164,18 +265,6 @@ h1{
             overflow: hidden;
             text-overflow: ellipsis;
             position: relative;
-
-            input {
-                width: 90%;
-                position: absolute;
-                background-position: bottom;
-                border:0;
-                font-style: italic;
-                background-color: $color-gray;
-                background-image: linear-gradient(to right, #333 10%, rgba(255, 255, 255, 0) 0%);
-                background-size: 10px 1px;
-                background-repeat: repeat-x;
-            }
         }
 
         .col-id {
