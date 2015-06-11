@@ -27,10 +27,10 @@ app.get('/get/scanner-active', function(req, res) {
 
 app.get('/get/new-devices', function(req, res) {
 	bleScan.scanForNewDevices(function(result){
-		if(result.status === 'error'){
-			res.status(400).send(result.msg);
+		if(result.success){
+			res.status(200).send(result.data);
 		}else{
-			res.status(200).send(result);
+			res.status(400).send(result.msg);
 		}
 	});
 });
@@ -46,7 +46,11 @@ app.post('/post/device', function(req, res){
 		name: req.body.name,
 		uuid: req.body.uuid
 		};
-	settings.create("device", newDoc, function(status){
-		res.send(status);
+	settings.create("device", newDoc, function(result){
+		if(result.success){
+			res.status(200).send(result.data);
+		}else{
+			res.status(400).send(result.msg);
+		}
 	});
 });

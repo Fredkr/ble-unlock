@@ -21,8 +21,10 @@ input {
   width: 90%;
   background-position: bottom;
   border: 0;
+  outline: none;
   font-style: italic;
   background-color: #D1D0CE;
+  background-image: -webkit-linear-gradient(left, #333 10%, rgba(255, 255, 255, 0) 0%);
   background-image: linear-gradient(to right, #333 10%, rgba(255, 255, 255, 0) 0%);
   background-size: 10px 1px;
   background-repeat: repeat-x; }
@@ -30,10 +32,23 @@ input {
 .device-synchronizer-container {
   background: #C7C6C4;
   opacity: 0.9;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   text-align: center;
   top: 60%;
   width: 50%;
@@ -49,7 +64,10 @@ input {
     margin: 20px; }
   .device-synchronizer-container i {
     color: #32CD32;
-    font-size: 60px; }
+    font-size: 60px;
+    margin-bottom: 10px; }
+  .device-synchronizer-container .synchronizing {
+    padding-bottom: 35px; }
   .device-synchronizer-container .error {
     color: #A92F41;
     cursor: pointer; }
@@ -114,52 +132,54 @@ input {
     .status-container .scanner-info.enabled {
       background-color: #32CD32;
       box-shadow: 0 0 0 rgba(50, 205, 50, 0.6);
-      animation: pulse 3s infinite;
-      -webkit-animation: pulse 3s infinite; }
+      -webkit-animation: pulse 3s infinite;
+              animation: pulse 3s infinite; }
 
 @-webkit-keyframes pulse {
   0% {
-    -webkit-box-shadow: 0 0 0 0 rgba(50, 205, 50, 0.6); }
+    box-shadow: 0 0 0 0 rgba(50, 205, 50, 0.6); }
   70% {
-    -webkit-box-shadow: 0 0 0 20px rgba(50, 205, 50, 0); }
+    box-shadow: 0 0 0 20px rgba(50, 205, 50, 0); }
   100% {
-    -webkit-box-shadow: 0 0 0 0 rgba(50, 205, 50, 0); } }
+    box-shadow: 0 0 0 0 rgba(50, 205, 50, 0); } }
 
 @keyframes pulse {
   0% {
-    -moz-box-shadow: 0 0 0 0 rgba(50, 205, 50, 0.6);
     box-shadow: 0 0 0 0 rgba(50, 205, 50, 0.6); }
   70% {
-    -moz-box-shadow: 0 0 0 20px rgba(50, 205, 50, 0);
     box-shadow: 0 0 0 20px rgba(50, 205, 50, 0); }
   100% {
-    -moz-box-shadow: 0 0 0 0 rgba(50, 205, 50, 0);
     box-shadow: 0 0 0 0 rgba(50, 205, 50, 0); } }
       .status-container .scanner-info.enabled p {
-        animation: text-pulse 3s infinite;
-        -webkit-animation: text-pulse 3s infinite; }
+        -webkit-animation: text-pulse 3s infinite;
+                animation: text-pulse 3s infinite; }
 
 @-webkit-keyframes text-pulse {
   0% {
-    -webkit-transform: scale(1); }
+    -webkit-transform: scale(1);
+            transform: scale(1); }
   50% {
-    -webkit-transform: scale(1.03); }
+    -webkit-transform: scale(1.03);
+            transform: scale(1.03); }
   100% {
-    -webkit-transform: scale(1); } }
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
 
 @keyframes text-pulse {
   0% {
-    transform: scale(1); }
+    -webkit-transform: scale(1);
+            transform: scale(1); }
   50% {
-    transform: scale(1.03); }
+    -webkit-transform: scale(1.03);
+            transform: scale(1.03); }
   100% {
-    transform: scale(1); } }
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
     .status-container .scanner-info.disabled {
       background-color: #A92F41; }
 
 .settings-container {
-  -moz-box-shadow: -5px -5px 5px #C7C6C4;
-  -webkit-box-shadow: -5px -5px 5px #C7C6C4;
+  -webkit-transform: translate3d(0, 0, 0);
   box-shadow: -5px -5px 5px #C7C6C4;
   position: absolute;
   top: 87%;
@@ -168,9 +188,8 @@ input {
   background: #D1D0CE; }
 
 .settings-content {
-  margin: auto;
-  width: 50%;
-  margin-bottom: 10%; }
+  margin: 0 auto 10% auto;
+  width: 50%; }
   .settings-content .settings-header {
     height: 13vh;
     position: relative;
@@ -181,7 +200,8 @@ input {
       left: 0;
       top: 20%;
       position: absolute;
-      animation-duration: 7s; }
+      -webkit-animation-duration: 7s;
+              animation-duration: 7s; }
   .settings-content .scanner-button {
     width: 50%;
     left: 25%;

@@ -15,6 +15,7 @@ body {
     height: 100%;
     background-color: $color-gray-light;
 }
+
 h1{
     text-align: center;
 }
@@ -28,7 +29,8 @@ h1{
 input {
     width: 90%;
     background-position: bottom;
-    border:0;
+    border: 0;
+    outline: none;
     font-style: italic;
     background-color: $color-gray;
     background-image: linear-gradient(to right, #333 10%, rgba(255, 255, 255, 0) 0%);
@@ -56,6 +58,7 @@ input {
     h1 {
         margin-bottom: 10px;
     }
+    
     button {
         margin: 20px;
     }
@@ -63,8 +66,12 @@ input {
     i {
         color: $color-green;
         font-size: 60px;
-    }  
+        margin-bottom: 10px;
 
+    }  
+    .synchronizing {
+        padding-bottom: 35px;
+    }    
     .error {
         color: $color-red;
         cursor: pointer;
@@ -121,6 +128,7 @@ input {
     padding: 20px;
     position: fixed !important;
 
+
     button {
         font-size: 125%;
         background-color: $color-orange;
@@ -152,42 +160,20 @@ input {
             background-color: $color-green;
             box-shadow: 0 0 0 $rgb-green-06;
             animation: pulse 3s infinite;
-            -webkit-animation: pulse 3s infinite;
 
-            @-webkit-keyframes pulse {
-                0% {
-                -webkit-box-shadow: 0 0 0 0  $rgb-green-06;
-                }
-                70% {
-                -webkit-box-shadow: 0 0 0 20px $rgb-green-00;
-                }
-                100% {
-                -webkit-box-shadow: 0 0 0 0 $rgb-green-00;
-                }
-            }
             @keyframes pulse {
                 0% {
-                -moz-box-shadow: 0 0 0 0  $rgb-green-06;
                 box-shadow: 0 0 0 0  $rgb-green-06;
                 }
                 70% {
-                -moz-box-shadow: 0 0 0 20px $rgb-green-00;
                 box-shadow: 0 0 0 20px $rgb-green-00;
                 }
                 100% {
-                -moz-box-shadow: 0 0 0 0 $rgb-green-00;
                 box-shadow: 0 0 0 0 $rgb-green-00;
                 }
             }
             p {
-                animation: text-pulse 3s infinite;
-                -webkit-animation: text-pulse 3s infinite;
-                
-                @-webkit-keyframes text-pulse {
-                    0% {-webkit-transform: scale(1);}
-                    50% {-webkit-transform: scale(1.03);}
-                    100% {-webkit-transform: scale(1);}
-                }
+                animation: text-pulse 3s infinite;  
                 @keyframes text-pulse {
                     0% {transform: scale(1);}
                     50% {transform: scale(1.03);}
@@ -204,8 +190,7 @@ input {
 }
 
 .settings-container {
-    -moz-box-shadow: -5px -5px 5px $color-gray-dark;
-    -webkit-box-shadow: -5px -5px 5px $color-gray-dark;
+    -webkit-transform: translate3d(0,0,0);
     box-shadow: -5px -5px 5px $color-gray-dark;
     position: absolute;
     top: 87%;
@@ -214,10 +199,10 @@ input {
     background: $color-gray;
 }
 
+
 .settings-content {
-    margin: auto; 
+    margin: 0 auto 10% auto; 
     width: 50%;
-    margin-bottom: 10%;
     @mixin input-field {
         input {
             border:0;
