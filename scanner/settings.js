@@ -36,9 +36,9 @@ self.create =  function(type, data, callback) {
         data: data    
     }, function (err, newDoc) { 
         if(err){
-            callback({success: false, message: err});
+            callback({success: false, msg: err});
         }
-        callback({success: true, message: 'Success'});
+        callback({success: true, data: data});
     });
 }
 

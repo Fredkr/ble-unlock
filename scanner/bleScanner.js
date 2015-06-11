@@ -60,10 +60,10 @@ self.scanForNewDevices = function(callback){
 
 	promise.then(function(data) {
 		toggleSetupMode();
-		return callback(data)
+		return  callback({success: true, data: data});
 	}, function(err) {
 	  	toggleSetupMode();
-		return callback({status:"error", msg: err })
+		return callback({success: false, msg: err});
 	});
 }
 

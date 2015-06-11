@@ -1,7 +1,7 @@
 var NewDeviceSynchronizer = React.createClass({
     getInitialState: function() {
         return {
-            uuids: [],
+            devices: [],
             synchronizing: true,
             error: false
         };
@@ -20,7 +20,7 @@ var NewDeviceSynchronizer = React.createClass({
             }.bind(this),
             success: function(data){
                 this.setState({
-                    uuids: data,
+                    devices: data,
                     synchronizing: false 
                 });
             }.bind(this)
@@ -41,7 +41,10 @@ var NewDeviceSynchronizer = React.createClass({
     },
     prepareRendering: function (){
         var cx = React.addons.classSet;
-        var classes = cx({
+        var divClasses = cx({
+            'synchronizing': this.state.synchronizing && !this.state.error
+        });
+        var iconClasses = cx({
             'fa-spin': this.state.synchronizing && !this.state.error,
             'error': this.state.error,
             'fa fa-refresh': true
@@ -53,7 +56,8 @@ var NewDeviceSynchronizer = React.createClass({
                     ? <h2> No devices found </h2>
                     : <h2> Scanning for devices (very) close by </h2>
                 }
-                <div><i className={classes} onClick={this.reset}></i>
+                <div className={divClasses}>
+                    <i className={iconClasses} onClick={this.reset}></i>
                     {this.state.error && 
 
                         <p> Try again </p>
@@ -63,7 +67,10 @@ var NewDeviceSynchronizer = React.createClass({
                 
             </div>  
         }else {
-            return <NewDevicesBox source={this.props.saveDeviceSource} uuids={this.state.uuids} />
+            return <NewDevicesBox             
+                        onNewDevice={this.props.onNewDevice}
+                        source={this.props.saveDeviceSource}
+                        devices={this.state.devices} />
         }
         return unrenderedHtml;     
             
@@ -81,6 +88,9 @@ var NewDevicesBox = React.createClass({
             name: ''
         };
     },
+    updateDeviceList: function(newDevice) {
+        this.props.onNewDevice(newDevice);
+    },
     saveDevice: function() {
         $.ajax({
             type: 'POST',
@@ -90,9 +100,10 @@ var NewDevicesBox = React.createClass({
                     name: this.state.name,
                     uuid: this.state.uuid
             }),
-            success: function(msg){
+            success: function(response){
+                this.updateDeviceList(response);
                 React.unmountComponentAtNode(document.getElementById('devicesynchronizer'));
-            }
+            }.bind(this)
         });
 
     },
@@ -118,7 +129,7 @@ var NewDevicesBox = React.createClass({
                         </tr>
                     </thead>
                     <tbody>
-                        {this.props.uuids.map(function(result) {
+                        {this.props.devices.map(function(result) {
                             var selected = result === this.state.uuid ? 'selected':'';
                             return (<tr>
                                 <td className={selected} 
