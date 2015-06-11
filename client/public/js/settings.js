@@ -24,6 +24,7 @@ var Settings = React.createClass({
                     <h2>Devices</h2>
                     <DeviceList 
                         getDeviceSource="http://localhost:3001/get/devices/"
+                        deleteDeviceSource="http://localhost:3001/delete/device/"
                         syncSource="http://localhost:3001/get/new-devices/"
                         saveDeviceSource="http://localhost:3001/post/device/" />
                 </div>

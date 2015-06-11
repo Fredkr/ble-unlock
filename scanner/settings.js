@@ -11,16 +11,13 @@ var self = this,
 
 self.listByType =  function(type, callback) {
     db.settings.find({"type":type}, function(err, documents){
-        var flatObjects =  documents.map(function(obj){ 
-           return obj.data;
-        });
-        callback(flatObjects);
+        callback(documents);
     });
 }
 
 self.getByType =  function(type, callback ) {
     db.settings.findOne({ "type": type }, function (err, doc) {
-        callback(doc.data)
+        callback(doc)
     });
 }
 
@@ -33,19 +30,26 @@ self.findAll = function(callback){
 self.create =  function(type, data, callback) {
     db.settings.insert({
         type: type,
-        data: data    
+        value: data    
     }, function (err, newDoc) { 
         if(err){
             callback({success: false, msg: err});
         }
-        callback({success: true, data: data});
+        callback({success: true, data: newDoc});
     });
 }
 
 self.remove = function(id, callback) {
     db.settings.remove({
-        _id: id
-    }, callback);
+     _id: id 
+    },
+    {},
+    function (err, numRemoved) {
+        if(err){
+            callback({success: false, msg: err});
+        }
+        callback({success: true});
+    });
 }
 
 

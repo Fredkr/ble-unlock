@@ -13,10 +13,27 @@ var DeviceList = React.createClass({
             }
         }.bind(this));
     },
+    deleteDevice: function(id, index, e){
+        $.ajax({
+            type: 'DELETE',
+            contentType: "application/json; charset=utf-8",
+            url: this.props.deleteDeviceSource,
+            data: JSON.stringify({id: id}),
+            success: function(response){
+                var self = this;
+                this.state.devices.splice(index, 1);
+                this.setState({
+                    devices: self.state.devices
+                });
+            }.bind(this)
+        });
+    },
     onNewDevice : function(newDevice){
         var newDeviceList = this.state.devices.slice();    
         newDeviceList.push(newDevice);   
-        this.setState({devices:newDeviceList})
+        this.setState({
+            devices:newDeviceList
+        })
     },
     render: function() {
         return (
@@ -31,18 +48,22 @@ var DeviceList = React.createClass({
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.devices.map(function(result, id) {
+                        {this.state.devices.map(function(result, index) {
 
                             return (<tr>
-                                <td className="col-id">{id + 1}</td>
-                                <td className="col-name">{result.name}</td>
-                                <td className="col-uuid">{result.uuid}</td>
+                                <td className="col-id">{index + 1}</td>
+                                <td className="col-name">{result.data.name}</td>
+                                <td className="col-uuid">{result.data.uuid}</td>
                                 <td className="col-buttons">
-                                    <button className="button-xsmall pure-button"><i className="fa fa-pencil"></i></button>
-                                    <button className="button-xsmall pure-button"><i className="fa fa-trash-o"></i></button>
+                                    <button className="button-xsmall pure-button">
+                                        <i className="fa fa-pencil"></i>
+                                    </button>
+                                    <button className="button-xsmall pure-button" onClick={this.deleteDevice.bind(this, result._id, index)}>
+                                        <i className="fa fa-trash-o"></i>
+                                    </button>
                                 </td>
                             </tr>)
-                        })}
+                        }.bind(this))}
                         <NewDeviceItem 
                             onNewDevice={this.onNewDevice}
                             saveDeviceSource={this.props.saveDeviceSource} />

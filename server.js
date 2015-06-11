@@ -54,3 +54,18 @@ app.post('/post/device', function(req, res){
 		}
 	});
 });
+
+app.delete('/delete/device', function(req, res) {
+	if(req.body.id === ''){
+		res.status(400).send({msg: 'Id is missing'});
+	}
+
+	settings.remove(req.body.id, function(result){
+		if(result.success){
+			res.status(200).send({msg: 'success'});
+		}else{
+			res.status(400).send(result.msg);
+		}
+	});
+
+});
