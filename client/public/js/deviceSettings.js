@@ -37,7 +37,8 @@ var DeviceList = React.createClass({
     },
     render: function() {
         return (
-            <div>      
+            <div>
+                <h2>Devices</h2>
                 <table className="pure-table pure-table-horizontal">
                     <thead>
                         <tr>
@@ -48,17 +49,14 @@ var DeviceList = React.createClass({
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.devices.map(function(result, index) {
+                        {this.state.devices.map(function(device, index) {
 
                             return (<tr>
                                 <td className="col-id">{index + 1}</td>
-                                <td className="col-name">{result.data.name}</td>
-                                <td className="col-uuid">{result.data.uuid}</td>
+                                <td className="col-name">{device.value.name}</td>
+                                <td className="col-uuid">{device.value.uuid}</td>
                                 <td className="col-buttons">
-                                    <button className="button-xsmall pure-button">
-                                        <i className="fa fa-pencil"></i>
-                                    </button>
-                                    <button className="button-xsmall pure-button" onClick={this.deleteDevice.bind(this, result._id, index)}>
+                                    <button className="pure-button" onClick={this.deleteDevice.bind(this, device._id, index)}>
                                         <i className="fa fa-trash-o"></i>
                                     </button>
                                 </td>
@@ -88,7 +86,7 @@ var NewDeviceSynchronizerButton = React.createClass({
     },
     render: function() {
 
-        return <button className="button pure-button scanner-button" onClick={this.synchronize}>
+        return <button className="pure-button scanner-button" onClick={this.synchronize}>
             Scan for new device   <i className="fa fa-search"></i>
         </button>;
     }
@@ -129,7 +127,7 @@ var NewDeviceItem = React.createClass({
             <td className="col-id">?</td>
             <td className="col-name"><input type="text" value={this.state.name} onChange={this.handleChange.bind(this, 'name')} /></td>
             <td className="col-uuid"><input type="text" value={this.state.uuid} onChange={this.handleChange.bind(this, 'uuid')} /></td>
-            <td className="col-save"><button className="button-xsmall pure-button" onClick={this.saveDevice}><i className="fa fa-floppy-o"></i></button></td>
+            <td className="col-buttons"><button className="button-xsmall pure-button" onClick={this.saveDevice}><i className="fa fa-floppy-o"></i></button></td>
         </tr>;
     }
 });

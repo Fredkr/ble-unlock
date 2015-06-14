@@ -21,8 +21,10 @@ var Settings = React.createClass({
                     <div className="settings-header">
                         <i className="fa fa-cog fa-spin settings-icon"></i>
                     </div>
-                    <h2>Devices</h2>
-                    <DeviceList 
+                    <GeneralSettings
+                        generalSettingsSource="http://localhost:3001/get/settings/general/"/>
+                    
+                    <DeviceList
                         getDeviceSource="http://localhost:3001/get/devices/"
                         deleteDeviceSource="http://localhost:3001/delete/device/"
                         syncSource="http://localhost:3001/get/new-devices/"

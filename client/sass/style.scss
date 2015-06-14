@@ -19,12 +19,7 @@ body {
 h1{
     text-align: center;
 }
-.center {
-    margin: auto;
-    position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
-    text-align: center;
-}
+
 
 input {
     width: 90%;
@@ -32,9 +27,10 @@ input {
     border: 0;
     outline: none;
     font-style: italic;
+    text-align: center;
     background-color: $color-gray;
     background-image: linear-gradient(to right, #333 10%, rgba(255, 255, 255, 0) 0%);
-    background-size: 10px 1px;
+    background-size: 14px 2px;
     background-repeat: repeat-x;
 }
 
@@ -89,7 +85,6 @@ input {
         background-size: 15px 2px;
         font-size: 20px;
         letter-spacing: 1px;
-        text-align: center;
     }
     table {
         width: 90%;
@@ -127,7 +122,10 @@ input {
     overflow: hidden;
     padding: 20px;
     position: fixed !important;
-
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    text-align: center;
 
     button {
         font-size: 125%;
@@ -203,19 +201,68 @@ input {
 .settings-content {
     margin: 0 auto 10% auto; 
     width: 50%;
-    @mixin input-field {
-        input {
-            border:0;
-            font-style: italic;
-            width: 90%;
-            background-color: $color-gray;
-            background-image: linear-gradient(to right, #333 10%, rgba(255, 255, 255, 0) 0%);
-            position: absolute;
-            background-position: bottom;
-            background-size: 10px 1px;
-            background-repeat: repeat-x;
-        }
+
+    button {
+        width: 80px;
     } 
+
+    .general {
+        overflow: hidden;
+        border-bottom: 1px solid $color-gray-dark;
+
+        .container{
+            display: flex;
+            align-items: flex-end;
+
+            .left {
+                flex-basis: 30%;
+                margin:  16px 0 10px 10px;
+            }
+            .center {
+                flex-basis: 50%;
+                margin:  5px 0 10px 10px;
+            }
+            .right {
+                flex-basis: 20%;
+                margin:  5px 0 10px 0;
+                text-align: center;
+            }
+
+            input {
+                font-size: 20px;
+                line-height: 30px;
+                &:valid {  
+                    font-size: 25px;
+                    letter-spacing: 10px;
+                }
+            }
+
+        }        
+        p {
+            color: $color-gray-dark-2;
+            font-style: italic;
+        } 
+
+        h3 {
+            color: $color-gray-dark-2;
+
+            &.line {
+                display: table;
+                white-space: nowrap;
+                margin-bottom: 0;
+                &:after {
+                    border-top: 1px solid $color-gray-dark;
+                    content: '';
+                    display: table-cell;
+                    position: relative;
+                    top: 0.5em;
+                    width: 100%;
+                    left: 1.5%;
+                }
+            } 
+        }
+        
+    }
 
     .settings-header {
         height: 13vh;
@@ -265,23 +312,9 @@ input {
         }
         .col-buttons {
             width: 20%;   
-            text-align: center;
-            button {
-                width: 50%;
-            }          
-        }
-        .col-save {
-            width: 20%;   
-            text-align: center;  
-            button {
-                width: 100%;
-            }     
-        }
-
-      
+            text-align: center;         
+        }   
     }
-
-
 }
 
 

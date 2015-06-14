@@ -51,6 +51,7 @@ var NewDeviceSynchronizer = React.createClass({
         });
         
         if(this.state.synchronizing){
+            <h2>Devices</h2>
             return <div className="device-synchronizer-container">
                 {this.state.error 
                     ? <h2> No devices found </h2>

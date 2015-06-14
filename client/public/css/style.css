@@ -8,25 +8,17 @@ body {
 h1 {
   text-align: center; }
 
-.center {
-  margin: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  text-align: center; }
-
 input {
   width: 90%;
   background-position: bottom;
   border: 0;
   outline: none;
   font-style: italic;
+  text-align: center;
   background-color: #D1D0CE;
   background-image: -webkit-linear-gradient(left, #333 10%, rgba(255, 255, 255, 0) 0%);
   background-image: linear-gradient(to right, #333 10%, rgba(255, 255, 255, 0) 0%);
-  background-size: 10px 1px;
+  background-size: 14px 2px;
   background-repeat: repeat-x; }
 
 .device-synchronizer-container {
@@ -81,8 +73,7 @@ input {
     background-color: #C7C6C4;
     background-size: 15px 2px;
     font-size: 20px;
-    letter-spacing: 1px;
-    text-align: center; }
+    letter-spacing: 1px; }
   .device-synchronizer-container table {
     width: 90%;
     margin: auto auto 30px;
@@ -109,7 +100,14 @@ input {
   height: 50%;
   overflow: hidden;
   padding: 20px;
-  position: fixed !important; }
+  position: fixed !important;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  text-align: center; }
   .status-container button {
     font-size: 125%;
     background-color: #EE4400;
@@ -190,6 +188,59 @@ input {
 .settings-content {
   margin: 0 auto 10% auto;
   width: 50%; }
+  .settings-content button {
+    width: 80px; }
+  .settings-content .general {
+    overflow: hidden;
+    border-bottom: 1px solid #C7C6C4; }
+    .settings-content .general .container {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: end;
+      -webkit-align-items: flex-end;
+          -ms-flex-align: end;
+              align-items: flex-end; }
+      .settings-content .general .container .left {
+        -webkit-flex-basis: 30%;
+            -ms-flex-preferred-size: 30%;
+                flex-basis: 30%;
+        margin: 16px 0 10px 10px; }
+      .settings-content .general .container .center {
+        -webkit-flex-basis: 50%;
+            -ms-flex-preferred-size: 50%;
+                flex-basis: 50%;
+        margin: 5px 0 10px 10px; }
+      .settings-content .general .container .right {
+        -webkit-flex-basis: 20%;
+            -ms-flex-preferred-size: 20%;
+                flex-basis: 20%;
+        margin: 5px 0 10px 0;
+        text-align: center; }
+      .settings-content .general .container input {
+        font-size: 20px;
+        line-height: 30px; }
+        .settings-content .general .container input:valid {
+          font-size: 25px;
+          letter-spacing: 10px; }
+    .settings-content .general p {
+      color: #353839;
+      font-style: italic; }
+    .settings-content .general h3 {
+      color: #353839; }
+      .settings-content .general h3.line {
+        display: table;
+        white-space: nowrap;
+        margin-bottom: 0; }
+        .settings-content .general h3.line:after {
+          border-top: 1px solid #C7C6C4;
+          content: '';
+          display: table-cell;
+          position: relative;
+          top: 0.5em;
+          width: 100%;
+          left: 1.5%; }
   .settings-content .settings-header {
     height: 13vh;
     position: relative;
@@ -228,10 +279,3 @@ input {
     .settings-content table .col-buttons {
       width: 20%;
       text-align: center; }
-      .settings-content table .col-buttons button {
-        width: 50%; }
-    .settings-content table .col-save {
-      width: 20%;
-      text-align: center; }
-      .settings-content table .col-save button {
-        width: 100%; }
