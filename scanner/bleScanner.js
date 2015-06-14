@@ -71,7 +71,7 @@ var initiateScan = function(callback) {
 
 	settings.listByType("device",function(devices){
 	    var deviceUuids =  devices.map(function(obj){ 
-	       return obj.data.uuid;
+	       return obj.value.uuid;
 	    });
 
 		startScanningToggleMode(deviceUuids);

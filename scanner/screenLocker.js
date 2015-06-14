@@ -58,7 +58,7 @@ self.lockScreen = function() {
 
 self.unlockScreen = function() {
 	settings.getByType("password", function(password){
-		applescript.execString(screenUnlockScript(password.data.value), function(err, rtn) {
+		applescript.execString(screenUnlockScript(password.data), function(err, rtn) {
 			if(err){
 				logger.error(err);
 			}	
