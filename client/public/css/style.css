@@ -3,7 +3,8 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background-color: #DCDCDC; }
+  background-color: #DCDCDC;
+  color: #353839; }
 
 h1 {
   text-align: center; }
@@ -20,6 +21,41 @@ input {
   background-image: linear-gradient(to right, #333 10%, rgba(255, 255, 255, 0) 0%);
   background-size: 14px 2px;
   background-repeat: repeat-x; }
+
+.toast {
+  top: 0;
+  right: 0;
+  position: absolute;
+  width: 20%;
+  height: 10%;
+  margin: 15px;
+  box-shadow: 10px 10px 44px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center; }
+  .toast h4 {
+    display: inline-block;
+    vertical-align: middle;
+    color: white;
+    margin: 10px 5px 5px 5px; }
+  .toast.success {
+    background-color: #8ACC84; }
+  .toast.info {
+    background-color: #ffff99; }
+    .toast.info h4 {
+      color: #353839; }
+  .toast.error {
+    background-color: #CC848A; }
 
 .device-synchronizer-container {
   background: #C7C6C4;
@@ -55,7 +91,7 @@ input {
   .device-synchronizer-container button {
     margin: 20px; }
   .device-synchronizer-container i {
-    color: #32CD32;
+    color: #77DD77;
     font-size: 60px;
     margin-bottom: 10px; }
   .device-synchronizer-container .synchronizing {
@@ -128,7 +164,7 @@ input {
       font-weight: bold;
       color: white; }
     .status-container .scanner-info.enabled {
-      background-color: #32CD32;
+      background-color: #77DD77;
       box-shadow: 0 0 0 rgba(50, 205, 50, 0.6);
       -webkit-animation: pulse 3s infinite;
               animation: pulse 3s infinite; }
@@ -258,7 +294,8 @@ input {
     left: 25%;
     position: relative;
     margin: 10px 0 10px 0;
-    background-color: #77DD77; }
+    color: white;
+    background-color: #8ACC84; }
   .settings-content table {
     width: 100%;
     table-layout: fixed;

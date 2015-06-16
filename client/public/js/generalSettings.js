@@ -39,7 +39,8 @@ var Password = React.createClass({
             password: '',
             placeHolder: 'plchldr',
             passwordHaveBeenFocused: false,
-            passwordIsSet: false
+            passwordIsSet: false, 
+            displayToast: false
         };
     },
     componentDidMount: function() {
@@ -61,7 +62,7 @@ var Password = React.createClass({
                     value: this.state.password,
             }),
             success: function(response){
-                var x = response;
+                this.showToastMessage("success", "Password saved");
             }.bind(this)
         });
     },
@@ -72,6 +73,12 @@ var Password = React.createClass({
             });
         }
     },
+    showToastMessage: function(type, message){
+
+        React.render(
+            <Toast type={type} nodeId="toast" message={message} />,
+            document.getElementById('toast'));
+    },
     handleInputChange: function (name, e) {
         var change = {};
         change[name] = e.target.value;
@@ -80,7 +87,8 @@ var Password = React.createClass({
     render: function() {
         return ( 
             <div className="general">
-                <h3 className="line"> Password {this.props.passwordLength}</h3>
+                <div id="toast"></div>
+                <h3 className="line"> Password </h3>
                 <div className="container">
                     <p className="left"> To be able to unlock your computer you need to enter your password here</p>
                     <div className="center">

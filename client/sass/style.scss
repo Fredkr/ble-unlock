@@ -6,7 +6,10 @@ $color-white: #FFFFFF;
 $color-orange: #EE4400;
 $color-black: #201F1D;
 $color-red: #A92F41;
-$color-green: #32CD32;
+$color-red-2: #CC848A;
+$color-green: #77DD77;
+$color-green-2: #8ACC84;
+$color-yellow: #ffff99;
 
 html,
 body {
@@ -14,6 +17,7 @@ body {
     padding: 0;
     height: 100%;
     background-color: $color-gray-light;
+    color: $color-gray-dark-2; 
 }
 
 h1{
@@ -34,6 +38,39 @@ input {
     background-repeat: repeat-x;
 }
 
+.toast {
+    top: 0;
+    right: 0;
+    position: absolute;
+    width: 20%;
+    height: 10%;
+    margin: 15px;
+    box-shadow: 10px 10px 44px 5px rgba(0,0,0,0.30);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    h4 {
+        display: inline-block;
+        vertical-align: middle;
+        color: white;
+        margin: 10px 5px 5px 5px;
+    }
+
+    &.success {
+        background-color: $color-green-2;
+    }
+    &.info {
+        background-color: $color-yellow;
+         h4 {
+            color: $color-gray-dark-2;
+         }
+    }
+    &.error {
+        background-color: $color-red-2;
+    }
+}
 .device-synchronizer-container{
     background: $color-gray-dark;
     opacity: 0.9;
@@ -133,7 +170,7 @@ input {
         width: 20%;
         color: white;
     }
-
+    
     .scanner-info {
         opacity: 0.7;
         border: 1px solid white;
@@ -283,7 +320,8 @@ input {
         left: 25%;
         position: relative;
         margin: 10px 0 10px 0;
-        background-color: #77DD77;
+        color: white;
+        background-color: $color-green-2;
         
     }
     table {

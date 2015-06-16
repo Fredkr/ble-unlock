@@ -5,15 +5,6 @@ var Settings = React.createClass({
             uuids: []
         };
     },
-    componentDidMount: function() {
-        $.get(this.props.source, function(result) {
-            if (this.isMounted()) {
-                this.setState({
-                    uuids: result
-                });
-            }
-        }.bind(this));
-    },
     render: function() {
         return ( 
             <div className="settings-container">
