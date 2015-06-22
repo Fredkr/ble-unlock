@@ -39,7 +39,7 @@ var NewDeviceSynchronizer = React.createClass({
         this.replaceState(this.getInitialState())
         this.componentDidMount();
     },
-    prepareRendering: function (){
+    render: function (){
         var cx = React.addons.classSet;
         var divClasses = cx({
             'synchronizing': this.state.synchronizing && !this.state.error
@@ -63,22 +63,14 @@ var NewDeviceSynchronizer = React.createClass({
 
                         <p> Try again </p>
                     }
-                </div>
-          
-                
+                </div>       
             </div>  
         }else {
             return <NewDevicesBox             
-                        onNewDevice={this.props.onNewDevice}
-                        source={this.props.saveDeviceSource}
+                        saveDevice={this.props.saveDevice}
+                        showToastMessage={this.props.showToastMessage}
                         devices={this.state.devices} />
-        }
-        return unrenderedHtml;     
-            
-    },
-    render: function() {
-        var classString = this.state.synchronizing ? 'fa fa-refresh fa-spin sync-icon' : 'fa fa-refresh sync-icon';
-        return <div>{this.prepareRendering()} </div> 
+        }            
     }
 });
 
@@ -93,20 +85,15 @@ var NewDevicesBox = React.createClass({
         this.props.onNewDevice(newDevice);
     },
     saveDevice: function() {
-        $.ajax({
-            type: 'POST',
-            contentType: "application/json; charset=utf-8",
-            url: this.props.source,
-            data: JSON.stringify({
-                    name: this.state.name,
-                    uuid: this.state.uuid
-            }),
-            success: function(response){
-                this.updateDeviceList(response);
+        var self = this;
+        self.props.saveDevice(self.state.name, self.state.uuid, function(result){
+            if(result.success){
                 React.unmountComponentAtNode(document.getElementById('devicesynchronizer'));
-            }.bind(this)
-        });
+            }else {
+                self.props.showToastMessage("error", result.msg);
 
+            }
+        });
     },
     deviceValidToSave: function(){
         if(this.state.uuid !== '' && this.state.name !== ''){

@@ -28,25 +28,29 @@ app.get('/get/scanner-active', function(req, res) {
 app.get('/get/new-devices', function(req, res) {
 	bleScan.scanForNewDevices(function(result){
 		if(result.success){
-			res.status(200).send(result.data);
+			return res.status(200).send(result.data);
 		}else{
-			res.status(400).send(result.msg);
+			return res.status(400).send(result.msg);
 		}
 	});
 });
 
-app.get('/get/devices/', function(req, res) {
-	settings.listByType("device",function(devices){
-		res.send(devices);
+app.get('/get/devices', function(req, res) {
+	settings.getSeveralByType('device',function(result){
+		if(result.success){
+			return res.status(200).send(result.data);
+		}else{
+			return res.status(400).send(result.msg);
+		}
 	});
 });
 
 app.get('/get/settings/password-is-set', function(req, res) {
 	settings.getSeveralByTypes(['password'], function(result){
 		if(result.success){
-			res.send(true);
+			return res.send(true);
 		}else {
-			res.send(false);
+			return res.send(false);
 		}
 	});
 });
@@ -54,51 +58,53 @@ app.get('/get/settings/general', function(req, res) {
 	var types = ['', ''];
 	settings.getSeveralByTypes(types, function(result){
 		if(result.success){
-			res.send(result);
+			return res.send(result);
 		}
 	});
 });
 
 app.post('/post/setting', function(req, res){
 	if(req.body.type === '' || req.body.value === ''){
-		res.status(400).send({msg: 'Invalid request'});
-		return;
+		return res.status(400).send('Invalid request');
 	}
-	settings.create(req.body.type, req.body.value, function(result){
+	settings.createOrUpdateSetting(req.body.type, req.body.value, function(result){
 		if(result.success){
-			res.status(200).send(result.data);
+			return res.status(200).send(result.data);
 		}else {
-			res.status(400).send(result.msg);
+			return res.status(400).send(result.msg);
 		}
 	});
 
 });
 
 app.post('/post/device', function(req, res){
-
+	if(req.body.name === '' || req.body.uuid === ''){
+		return res.status(400).send('Incomplete device information');
+		
+	}
 	var newDoc = {
 		name: req.body.name,
 		uuid: req.body.uuid
 		};
-	settings.create("device", newDoc, function(result){
+	settings.createDevice(newDoc, function(result){
 		if(result.success){
-			res.status(200).send(result.data);
+			return res.status(200).send(result.data);
 		}else{
-			res.status(400).send(result.msg);
+			return res.status(400).send(result.msg);
 		}
 	});
 });
 
 app.delete('/delete/device', function(req, res) {
 	if(req.body.id === ''){
-		res.status(400).send({msg: 'Id is missing'});
+		return res.status(400).send('Id is missing');
 	}
 
 	settings.remove(req.body.id, function(result){
 		if(result.success){
-			res.status(200).send({msg: 'success'});
+			return res.status(200).send('success');
 		}else{
-			res.status(400).send(result.msg);
+			return res.status(400).send(result.msg);
 		}
 	});
 

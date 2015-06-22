@@ -9,19 +9,21 @@ var self = this,
         })
     };
 
-self.listByType =  function(type, callback) {
-    db.settings.find({"type":type}, function(err, documents){
-        callback(documents);
-    });
-}
-
 self.getByType =  function(type, callback ) {
     db.settings.findOne({ "type": type }, function (err, doc) {
         if(err || doc === null){
             return callback({success: false, msg: err});
         }
         return callback({success: true, data: doc.value});
+    });
+}
 
+self.getSeveralByType =  function(type, callback) {
+    db.settings.find({"type":type}, function(err, docs){
+        if(err || docs === 'undefined' || docs.length === 0){
+            return callback({success: false, data: [], msg: 'no results found'});
+        }
+        return callback({success: true, data: docs});
     });
 }
 
@@ -32,50 +34,9 @@ self.getSeveralByTypes =  function(types, callback ) {
     }
     db.settings.find({ $or: lookUp }, function (err, docs) {
        if(err || docs === 'undefined' || docs.length === 0){
-            return callback({success: false, msg: err});
+            return callback({success: false, msg: 'no results found'});
         }
-        return callback({success: true, data: docs});
-
-    });
-}
-
-self.findAll = function(callback){
-    db.settings.find({}, function (err, docs) {
-        callback(docs);
-    });
-}
-
-self.create =  function(type, newVal, callback) {
-    self.getByType(type, function(result){
-        if(result.success){
-            self.update(type, newVal, function(result){
-                callback(result);
-            });
-        }else {
-            db.settings.insert({
-                type: type,
-                value: newVal    
-            }, function (err, newDoc) { 
-                if(err){
-                    callback({success: false, msg: err});
-                }
-                callback({success: true, data: newDoc});
-            });
-        }
-    })
-}
-
-self.update = function(type, newVal, callback){
-
-    db.settings.update(
-        { type: type },
-        { $set: { value: newVal } },
-        { multi: false },
-        function (err, numReplaced) {
-            if(err){
-                callback({success: false, msg: err});
-            }
-            callback({success: true});   
+        return callback({success: true, data: [], data: docs});
     });
 }
 
@@ -91,13 +52,63 @@ self.remove = function(id, callback) {
     });
 }
 
+self.createDevice =  function(newDevice, callback) {
+    self.getSeveralByType('device', function(result){
+        if(result.success && result.data.some(validateUniqueDevice.bind(this, newDevice.uuid))){
+            callback({success: false, msg: 'Device already exists'});
+        }else {
+            insertDocument('device', newDevice, callback);
+        }
+    })
+}
 
+self.createOrUpdateSetting =  function(type, newDoc, callback) {
+    self.getByType(type, function(result){
+        if(result.success){
+            update(type, newDoc, function(result){
+                callback(result);
+            });
+        }else {
+            insertDocument(type, newDoc, callback);
+        }
+    })
+}
+
+var validateUniqueDevice = function(uuid, e, index, array){
+    return e.value.uuid === uuid;
+};
+
+var insertDocument = function(type, newDoc, callback){
+    db.settings.insert({
+        type: type,
+        value: newDoc    
+    }, function (err, newDoc) { 
+        if(err){
+            callback({success: false, msg: err});
+        }
+        callback({success: true, data: newDoc});
+    });
+}
+
+var update = function(type, newVal, callback){
+
+    db.settings.update(
+        { type: type },
+        { $set: { value: newVal } },
+        { multi: false },
+        function (err, numReplaced) {
+            if(err){
+                callback({success: false, msg: err});
+            }
+            callback({success: true});   
+    });
+}
 
 module.exports = {
-    findAll: self.findAll,
-    listByType: self.listByType,
     getByType: self.getByType,
+    getSeveralByType: self.getSeveralByType,
     getSeveralByTypes: self.getSeveralByTypes,
-    create: self.create,
+    createDevice: self.createDevice,
+    createOrUpdateSetting: self.createOrUpdateSetting,
     remove: self.remove
 };

@@ -5,14 +5,19 @@ var DeviceList = React.createClass({
         };
     },
     componentDidMount: function() {
-        $.get(this.props.getDeviceSource, function(result) {
-            if (this.isMounted()) {
-                this.setState({
-                    devices: result
-                });
-            }
-        }.bind(this));
-    },
+        $.ajax({
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            url: this.props.getDeviceSource,
+            success: function(response){
+                if (this.isMounted()) {
+                    this.setState({
+                        devices: response
+                    });
+                }
+            }.bind(this)
+        });
+    },    
     deleteDevice: function(id, index, e){
         $.ajax({
             type: 'DELETE',
@@ -25,14 +30,35 @@ var DeviceList = React.createClass({
                 this.setState({
                     devices: self.state.devices
                 });
+            }.bind(this),
+            error: function(response){
+                var x = response;
+            }.bind(this)
+        });
+    },
+    saveDevice: function(name, uuid,callback) {
+        $.ajax({
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            url: this.props.saveDeviceSource,
+            data: JSON.stringify({
+                    name: name,
+                    uuid: uuid
+            }),
+            success: function(response){
+                this.onNewDevice(response);
+                return callback({success: true});
+            }.bind(this),
+            error: function(response){
+                return callback({success: false, msg: response.responseText});
             }.bind(this)
         });
     },
     onNewDevice : function(newDevice){
-        var newDeviceList = this.state.devices.slice();    
+        var newDeviceList = this.state.devices;    
         newDeviceList.push(newDevice);   
         this.setState({
-            devices:newDeviceList
+            devices: newDeviceList
         })
     },
     render: function() {
@@ -50,7 +76,6 @@ var DeviceList = React.createClass({
                     </thead>
                     <tbody>
                         {this.state.devices.map(function(device, index) {
-
                             return (<tr>
                                 <td className="col-id">{index + 1}</td>
                                 <td className="col-name">{device.value.name}</td>
@@ -62,15 +87,15 @@ var DeviceList = React.createClass({
                                 </td>
                             </tr>)
                         }.bind(this))}
-                        <NewDeviceItem 
-                            onNewDevice={this.onNewDevice}
-                            saveDeviceSource={this.props.saveDeviceSource} />
+                        <NewDeviceItem
+                            showToastMessage={this.props.showToastMessage}
+                            saveDevice={this.saveDevice}/>
                     </tbody>
                 </table>
-                <NewDeviceSynchronizerButton 
-                    onNewDevice={this.onNewDevice}
-                    syncSource={this.props.syncSource}
-                    saveDeviceSource={this.props.saveDeviceSource} />
+                <NewDeviceSynchronizerButton
+                    showToastMessage={this.props.showToastMessage}
+                    saveDevice={this.saveDevice}
+                    syncSource={this.props.syncSource}/>
             </div>
         );
     }
@@ -79,9 +104,9 @@ var DeviceList = React.createClass({
 var NewDeviceSynchronizerButton = React.createClass({
     synchronize: function() {
         React.render( <NewDeviceSynchronizer 
-            onNewDevice={this.props.onNewDevice}
-            syncSource={this.props.syncSource} 
-            saveDeviceSource={this.props.saveDeviceSource} />
+            saveDevice={this.props.saveDevice}
+            showToastMessage={this.props.showToastMessage}
+            syncSource={this.props.syncSource} />
             , document.getElementById('devicesynchronizer'));
     },
     render: function() {
@@ -99,22 +124,14 @@ var NewDeviceItem = React.createClass({
             uuid: ''
         };
     },
-    updateDeviceList: function(newDevice) {
-        this.props.onNewDevice(newDevice);
-    },
     saveDevice: function() {
-        $.ajax({
-            type: 'POST',
-            contentType: "application/json; charset=utf-8",
-            url: this.props.saveDeviceSource,
-            data: JSON.stringify({
-                    name: this.state.name,
-                    uuid: this.state.uuid
-            }),
-            success: function(response){
-                this.updateDeviceList(response);
-                this.replaceState(this.getInitialState())
-            }.bind(this)
+        var self = this;
+        self.props.saveDevice(self.state.name, self.state.uuid, function(result){
+            if(result.success){
+                self.replaceState(self.getInitialState())
+            }else {
+                self.props.showToastMessage("error", result.msg);
+            }
         });
     },
     handleChange: function (name, e) {

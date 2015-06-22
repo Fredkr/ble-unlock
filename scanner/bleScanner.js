@@ -69,8 +69,8 @@ self.scanForNewDevices = function(callback){
 
 var initiateScan = function(callback) {
 
-	settings.listByType("device",function(devices){
-	    var deviceUuids =  devices.map(function(obj){ 
+	settings.getSeveralByType("device",function(result){
+	    var deviceUuids =  result.data.map(function(obj){ 
 	       return obj.value.uuid;
 	    });
 
