@@ -18,12 +18,11 @@ note: this assumes you have node installed.
 4. run npm start - the app is now running
 
 ###Set it up
-1. In a browser go to localhost:3001
+1. Go to localhost:3001 in any browser.
 2. Set up your password to your computer.
 3. Start scanning for a BLE device you want to use. (Make sure Bluetooth is not disabled on your computer). Once found give it a name.
 4. Optionally you can manually save a device by entering its UUID.
 5. You are all set, you can now turn the service on.
-6. 
 
 ##Disclaimer
 All data (password/device info) used by this app is stored in a file in plain text. However, this data is only used by your computer locally. No data of any kind will be broadcasted over bluetooth or outside your local network.
