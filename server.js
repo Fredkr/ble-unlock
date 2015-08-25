@@ -45,15 +45,19 @@ app.get('/get/devices', function(req, res) {
 	});
 });
 
-app.get('/get/settings/password-is-set', function(req, res) {
-	settings.getSeveralByTypes(['password'], function(result){
+app.post('/get/setting/', function(req, res) {
+	if(req.body.type === ''){
+		return res.status(400).send('Invalid request');
+	}
+	settings.getByType(req.body.type, function(result){
 		if(result.success){
-			return res.send(true);
-		}else {
+			return res.send(result.data);
+		}else{
 			return res.send(false);
 		}
 	});
 });
+
 app.get('/get/settings/general', function(req, res) {
 	var types = ['', ''];
 	settings.getSeveralByTypes(types, function(result){
@@ -70,17 +74,15 @@ app.post('/post/setting', function(req, res){
 	settings.createOrUpdateSetting(req.body.type, req.body.value, function(result){
 		if(result.success){
 			return res.status(200).send(result.data);
-		}else {
+		}else{
 			return res.status(400).send(result.msg);
 		}
 	});
-
 });
 
 app.post('/post/device', function(req, res){
 	if(req.body.name === '' || req.body.uuid === ''){
 		return res.status(400).send('Incomplete device information');
-		
 	}
 	var newDoc = {
 		name: req.body.name,
@@ -99,7 +101,6 @@ app.delete('/delete/device', function(req, res) {
 	if(req.body.id === ''){
 		return res.status(400).send('Id is missing');
 	}
-
 	settings.remove(req.body.id, function(result){
 		if(result.success){
 			return res.status(200).send('success');

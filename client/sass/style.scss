@@ -11,16 +11,15 @@ $color-green: #77DD77;
 $color-green-2: #8ACC84;
 $color-yellow: #ffff99;
 
-html,
-body {
+html, body {
     margin: 0;
     padding: 0;
     height: 100%;
     background-color: $color-gray-light;
-    color: $color-gray-dark-2; 
+    color: $color-gray-dark-2;
 }
 
-h1{
+h1 {
     text-align: center;
 }
 
@@ -57,15 +56,15 @@ input {
         color: white;
         margin: 10px 5px 5px 5px;
     }
-
     &.success {
         background-color: $color-green-2;
     }
     &.info {
         background-color: $color-yellow;
-         h4 {
+
+        h4 {
             color: $color-gray-dark-2;
-         }
+        }
     }
     &.error {
         background-color: $color-red-2;
@@ -91,20 +90,17 @@ input {
     h1 {
         margin-bottom: 10px;
     }
-    
     button {
         margin: 20px;
     }
-
     i {
         color: $color-green;
         font-size: 60px;
         margin-bottom: 10px;
-
-    }  
+    }
     .synchronizing {
         padding-bottom: 35px;
-    }    
+    }
     .error {
         color: $color-red;
         cursor: pointer;
@@ -115,7 +111,6 @@ input {
         border: 1px solid gray;
         border-radius: 4px;
     }
-    
     input {
         width: 60%;
         background-color: $color-gray-dark;
@@ -127,13 +122,13 @@ input {
         width: 90%;
         margin: auto auto 30px;
         text-align: center;
+
         tr:after {
             content: ' ';
             display: block;
             visibility: hidden;
             clear: both;
         }
-
         thead {
             text-align: center;
         }
@@ -149,8 +144,9 @@ input {
         }
     }
 
-    thead, tbody, tr, td, th { display: block; }
-    
+    thead, tbody, tr, td, th {
+        display: block;
+    }
 }
 
 .status-container {
@@ -170,7 +166,6 @@ input {
         width: 20%;
         color: white;
     }
-    
     .scanner-info {
         opacity: 0.7;
         border: 1px solid white;
@@ -187,11 +182,9 @@ input {
             font-weight: bold;
             color: white;
         }
-        
         &.enabled {
             $rgb-green-06: rgba(50, 205, 50, 0.6);
             $rgb-green-00: rgba(50, 205, 50, 0);
-            
             background-color: $color-green;
             box-shadow: 0 0 0 $rgb-green-06;
             animation: pulse 3s infinite;
@@ -208,16 +201,14 @@ input {
                 }
             }
             p {
-                animation: text-pulse 3s infinite;  
+                animation: text-pulse 3s infinite;
                 @keyframes text-pulse {
                     0% {transform: scale(1);}
                     50% {transform: scale(1.03);}
                     100% {transform: scale(1);}
-                }                
+                }
             }
-
         }
-
         &.disabled {
             background-color:  $color-red;
         }
@@ -236,13 +227,12 @@ input {
 
 
 .settings-content {
-    margin: 0 auto 10% auto; 
+    margin: 0 auto 10% auto;
     width: 50%;
 
     button {
         width: 80px;
-    } 
-
+    }
     .general {
         overflow: hidden;
         border-bottom: 1px solid $color-gray-dark;
@@ -257,29 +247,46 @@ input {
             }
             .center {
                 flex-basis: 50%;
-                margin:  5px 0 10px 10px;
+                margin: 5px 0 10px 10px;
+            }
+            .two-column {
+                display: flex;
+                text-align: center;
+                form {
+                    flex-basis: 50%;
+                }
+                input {
+                    margin-top: 10px;
+                }
             }
             .right {
                 flex-basis: 20%;
                 margin:  5px 0 10px 0;
                 text-align: center;
             }
-
-            input {
+            form {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+            }
+            .radio-input {
+                width: auto;
+            }
+            .text-input {
                 font-size: 20px;
                 line-height: 30px;
-                &:valid {  
+
+                &:valid {
                     font-size: 25px;
                     letter-spacing: 10px;
                 }
             }
-
-        }        
+        }
         p {
             color: $color-gray-dark-2;
             font-style: italic;
-        } 
-
+        }
         h3 {
             color: $color-gray-dark-2;
 
@@ -287,6 +294,7 @@ input {
                 display: table;
                 white-space: nowrap;
                 margin-bottom: 0;
+
                 &:after {
                     border-top: 1px solid $color-gray-dark;
                     content: '';
@@ -296,11 +304,9 @@ input {
                     width: 100%;
                     left: 1.5%;
                 }
-            } 
+            }
         }
-        
     }
-
     .settings-header {
         height: 13vh;
         position: relative;
@@ -322,7 +328,6 @@ input {
         margin: 10px 0 10px 0;
         color: white;
         background-color: $color-green-2;
-        
     }
     table {
         width: 100%;
@@ -336,7 +341,6 @@ input {
             text-overflow: ellipsis;
             position: relative;
         }
-
         .col-id {
             width: 5%;
             text-align: center;
@@ -345,18 +349,11 @@ input {
             width: 20%;
         }
         .col-uuid {
-            width: 55%;      
-      
+            width: 55%;
         }
         .col-buttons {
-            width: 20%;   
-            text-align: center;         
-        }   
+            width: 20%;
+            text-align: center;
+        }
     }
 }
-
-
-
-
-
-

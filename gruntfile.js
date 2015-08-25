@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
     grunt.initConfig({
-        
+
         sass: {
             dist: {
                 files: {
@@ -17,7 +17,7 @@ module.exports = function(grunt) {
         autoprefixer: {
             dist: {
                 files: {
-                    'client/public/css/style.css':'client/public/css/style.css'
+                    'client/public/css/style.css': 'client/public/css/style.css'
                 }
             }
         }
