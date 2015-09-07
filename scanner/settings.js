@@ -1,6 +1,5 @@
-var self = this,
-    path = require('path'),
-    util = require('util'),
+'use strict';
+var path = require('path'),
     Datastore = require('nedb'),
     db = {
         settings: new Datastore({
@@ -9,8 +8,8 @@ var self = this,
         })
     };
 
-self.getByType =  function(type, callback ) {
-    db.settings.findOne({ "type": type }, function (err, doc) {
+function getByType(type, callback ) {
+    db.settings.findOne({ 'type': type }, function (err, doc) {
         if(err || doc === null){
             return callback({success: false, msg: err});
         }
@@ -18,8 +17,8 @@ self.getByType =  function(type, callback ) {
     });
 }
 
-self.getSeveralByType =  function(type, callback) {
-    db.settings.find({"type":type}, function(err, docs){
+function getSeveralByType(type, callback) {
+    db.settings.find({'type':type}, function(err, docs){
         if(err || docs === 'undefined' || docs.length === 0){
             return callback({success: false, data: [], msg: 'no results found'});
         }
@@ -27,24 +26,24 @@ self.getSeveralByType =  function(type, callback) {
     });
 }
 
-self.getSeveralByTypes =  function(types, callback ) {
+function getSeveralByTypes(types, callback ) {
     var lookUp = [];
-    for (i = 0; i < types.length; i++) { 
+    for (var i = 0; i < types.length; i++) {
         lookUp.push({type: types[i]});
     }
     db.settings.find({ $or: lookUp }, function (err, docs) {
-       if(err || docs === 'undefined' || docs.length === 0){
+        if(err || docs === 'undefined' || docs.length === 0){
             return callback({success: false, msg: 'no results found'});
         }
-        return callback({success: true, data: [], data: docs});
+        return callback({success: true, data: docs});
     });
 }
 
-self.remove = function(id, callback) {
+function remove(id, callback) {
     db.settings.remove(
     { _id: id },
     {},
-    function (err, numRemoved) {
+    function (err) {
         if(err){
             callback({success: false, msg: err});
         }
@@ -52,18 +51,18 @@ self.remove = function(id, callback) {
     });
 }
 
-self.createDevice =  function(newDevice, callback) {
-    self.getSeveralByType('device', function(result){
+function createDevice(newDevice, callback) {
+    getSeveralByType('device', function(result){
         if(result.success && result.data.some(validateUniqueDevice.bind(this, newDevice.uuid))){
             callback({success: false, msg: 'Device already exists'});
         }else {
             insertDocument('device', newDevice, callback);
         }
-    })
+    });
 }
 
-self.createOrUpdateSetting =  function(type, newDoc, callback) {
-    self.getByType(type, function(result){
+function createOrUpdateSetting(type, newDoc, callback) {
+    getByType(type, function(result){
         if(result.success){
             update(type, newDoc, function(result){
                 callback(result);
@@ -71,18 +70,18 @@ self.createOrUpdateSetting =  function(type, newDoc, callback) {
         }else {
             insertDocument(type, newDoc, callback);
         }
-    })
+    });
 }
 
-var validateUniqueDevice = function(uuid, e, index, array){
+function validateUniqueDevice(uuid, e){
     return e.value.uuid === uuid;
-};
+}
 
-var insertDocument = function(type, newDoc, callback){
+function insertDocument(type, newDoc, callback){
     db.settings.insert({
         type: type,
-        value: newDoc    
-    }, function (err, newDoc) { 
+        value: newDoc
+    }, function (err, newDoc) {
         if(err){
             callback({success: false, msg: err});
         }
@@ -90,25 +89,24 @@ var insertDocument = function(type, newDoc, callback){
     });
 }
 
-var update = function(type, newVal, callback){
-
+function update(type, newVal, callback){
     db.settings.update(
         { type: type },
         { $set: { value: newVal } },
         { multi: false },
-        function (err, numReplaced) {
+        function (err) {
             if(err){
                 callback({success: false, msg: err});
             }
-            callback({success: true});   
-    });
+            callback({success: true});
+        });
 }
 
 module.exports = {
-    getByType: self.getByType,
-    getSeveralByType: self.getSeveralByType,
-    getSeveralByTypes: self.getSeveralByTypes,
-    createDevice: self.createDevice,
-    createOrUpdateSetting: self.createOrUpdateSetting,
-    remove: self.remove
+    getByType: getByType,
+    getSeveralByType: getSeveralByType,
+    getSeveralByTypes: getSeveralByTypes,
+    createDevice: createDevice,
+    createOrUpdateSetting: createOrUpdateSetting,
+    remove: remove
 };
